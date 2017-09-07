@@ -1,0 +1,19 @@
+{
+  "name": "mmm-slack_user_info",
+  "version": "1.0.0",
+  "description": "Module for getting user info from Slack",
+  "main": "mmm-slackuserinfo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrkno/mmm-slackuserinfo.git"
+  },
+  "author": "Sigbjørn Trageton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nrkno/mmm-slackuserinfo/issues"
+  },
+  "homepage": "https://github.com/nrkno/mmm-slackuserinfo#readme"
+}
