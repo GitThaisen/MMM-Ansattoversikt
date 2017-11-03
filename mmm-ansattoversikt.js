@@ -1,10 +1,10 @@
-Module.register('MMM-SlackUserInfo', {
+Module.register('MMM-Ansattoversikt', {
 	defaults: {
 	},
 	
-	// getStyles: function() {
-	// 	return ['slack.css'];
-	// },
+	getStyles: function() {
+		return ['slack.css'];
+	},
 
 	start: function() {
 		this.openSlackConnection();
@@ -28,19 +28,17 @@ Module.register('MMM-SlackUserInfo', {
 	},
 
     getDom: function() {
-        var userElement = document.createElement('div');
+      var userElement = document.createElement('div');
 		userElement.className = 'light normal';
 		if(this.randomUser)
 		{
-            var image = document.createElement('img');
-            image.src = this.randomUser.profile.image_192;
-            userElement.appendChild(image);
-            // if(this.config.showUserName) {
-            //     var userElement = document.createElement('p');
-            //     userElement.className = 'user';
-            //     userElement.innerHTML = '@' + this.slackMessages[randomMessageId].user;
-			//     messageElement.appendChild(userElement);
-            // }
+			var image = document.createElement('img');
+			image.className = 'profilePicture';
+         image.src = this.randomUser.some.slack.image;
+         userElement.appendChild(image);
+         var userName = document.createElement('p');
+         userName.innerHTML = this.randomUser.name + '<br/>' + this.randomUser.role;
+         userElement.appendChild(userName);
 		}
 		return userElement;
     }
