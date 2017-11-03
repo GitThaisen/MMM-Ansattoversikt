@@ -3,7 +3,7 @@ Module.register('MMM-Ansattoversikt', {
 	},
 	
 	getStyles: function() {
-		return ['slack.css'];
+		return ['styles.css'];
 	},
 
 	start: function() {
@@ -24,24 +24,52 @@ Module.register('MMM-Ansattoversikt', {
 			console.log(payload);
 			if(payload != null) {
 				this.randomEmployee = payload;
-				this.updateDom(2.5 * 1000);
+				this.updateDom(1000);
 			}
 		}
 	},
 
    getDom: function() {
-      var employeeElement = document.createElement('div');
-		employeeElement.className = 'light normal';
+		var employeeElement = '';
 		if(this.randomEmployee) {
-			var image = document.createElement('img');
-			image.className = 'profilePicture';
-         image.src = this.getProfilePicture();
-         employeeElement.appendChild(image);
-         var employeeName = document.createElement('p');
-         employeeName.innerHTML = this.randomEmployee.name + '<br/>' + this.randomEmployee.role;
-         employeeElement.appendChild(employeeName);
+			employeeElement = this.createEmployeeElement();
 		}
 		return employeeElement;
+	},
+
+	createEmployeeElement: function() {
+		var employeeElement = document.createElement('div');
+		employeeElement.className = 'employee';
+		var imageElement = document.createElement('div');
+		imageElement.className = 'employee__image';
+		imageElement.appendChild(this.createEmployeeImage());
+		employeeElement.appendChild(imageElement);
+		employeeElement.appendChild(this.createEmployeeContent());
+		return employeeElement;
+	},
+
+	createEmployeeImage: function() {
+		var imageElement = document.createElement('img');
+		imageElement.src = this.getProfilePicture();
+		return imageElement;
+	},
+
+	createEmployeeContent: function() {
+		var employeeContent = document.createElement('div');
+		employeeContent.className = 'employee__content';
+		var nameElement = document.createElement('h2');
+		nameElement.className = 'employee__content__heading employee__content__heading__name';
+		nameElement.innerHTML = this.randomEmployee.name;
+		var roleElement = document.createElement('div');
+		roleElement.className = 'employee__content__heading employee__content__heading__role';
+		roleElement.innerHTML = this.randomEmployee.role;
+		var areaElement = document.createElement('div');
+		areaElement.className = 'employee__content__heading employee__content__heading__area';
+		areaElement.innerHTML = this.randomEmployee.productArea;
+		employeeContent.appendChild(nameElement);
+		employeeContent.appendChild(roleElement);
+		employeeContent.appendChild(areaElement);
+		return employeeContent;
 	},
 
 	getProfilePicture: function() {
