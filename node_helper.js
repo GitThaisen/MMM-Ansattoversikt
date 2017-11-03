@@ -13,7 +13,7 @@ module.exports = NodeHelper.create({
 
 	socketNotificationReceived: function(notification, payload) {
 		var self = this;
-		if(notification === 'GET_SLACK_USERINFO') {
+		if(notification === 'GET_RANDOM_EMPLOYEE') {
 			self.config = payload.config;
 			self.getDataFromSpreadSheet(function(nrkEmployees) {
 				self.getUsersFromSlack(function(slackUsers) {
@@ -115,7 +115,7 @@ module.exports = NodeHelper.create({
 	getRandomUser: function() {
 		var self = this;
 		var randomUser = employees[Math.floor(Math.random() * employees.length)];
-		self.sendSocketNotification('SLACK_RANDOM_USER', randomUser);
+		self.sendSocketNotification('RANDOM_EMPLOYEE', randomUser);
 		setTimeout(function() { self.getRandomUser(); }, self.config.updateInterval * 1000);
 	}
 });
