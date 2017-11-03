@@ -8,11 +8,12 @@ Module.register('MMM-Ansattoversikt', {
 
 	start: function() {
 		this.openSlackConnection();
-        var self = this;
-        setInterval(function() {
-            self.updateDom(1000);
-        }, 10000);
-    },
+		this.randomEmployee = {};
+      var self = this;
+      setInterval(function() {
+      	self.updateDom(1000);
+      }, 10000);
+   },
 
    openSlackConnection: function() {
 		this.sendSocketNotification('GET_RANDOM_EMPLOYEE', {config: this.config});
@@ -43,10 +44,10 @@ Module.register('MMM-Ansattoversikt', {
 		return employeeElement;
 	},
 
-	getProfilePicture: function(result) {
+	getProfilePicture: function() {
 		if(this.randomEmployee.imageSource === 'Slack') {
-			return this.randomEmployee.some.slack.image != '' ? this.randomEmployee.some.slack.image : './images/avatar_fallback.png';
+			return this.randomEmployee.some.slack.image || this.file('images/avatar_fallback.png');
 		}
-		return './images/avatar/' + this.randomEmployee.imageSource + '.png';
+		return this.file('images/avatar/' + this.randomEmployee.imageSource + '.png');
 	}
 });
