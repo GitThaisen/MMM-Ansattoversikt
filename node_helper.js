@@ -57,7 +57,6 @@ module.exports = NodeHelper.create({
 		  	exposeLevel: person['Ekspo.'],
 		  	role: person['Primærrolle'] || '',
 		  	productArea: person['Produktområde'] || '',
-		  	// kaleidoId: person['Bilde-id (Kaleido)'] || '',
 		  	imageSource: person.Profilbilde,
 		  	bio: person['Kort biografi'] || '',
 		  	mail: person['E-postadresse'] || '',
@@ -82,7 +81,7 @@ module.exports = NodeHelper.create({
 		if(employees.length === 0) {
 			var doc = new GoogleSpreadsheet(self.config.googleSpreadSheetId);
 			doc.useServiceAccountAuth(creds, function (err) {
-				doc.getRows(1, { offset: 2, limit: 20 }, function(err, rows) {
+				doc.getRows(1, { offset: 2 }, function(err, rows) {
 					var columnHeaders = rows[0];
 					var employeesFromSpreadsheet = rows.slice(1)
 						.map((valuesArray) => self.formatValues(columnHeaders, valuesArray))
@@ -114,8 +113,8 @@ module.exports = NodeHelper.create({
 
 	getRandomUser: function() {
 		var self = this;
-		var randomEmployee = employees[Math.floor(Math.random() * employees.length)];
+		var randomEmployee = employees.filter((person) => person.exposeLevel == 1)[Math.floor(Math.random() * employees.length)];
 		self.sendSocketNotification('RANDOM_EMPLOYEE', randomEmployee);
-		setTimeout(function() { self.getRandomUser(); }, self.config.updateInterval * 1000);
+		setTimeout(function() { self.getRandomUser(); }, parseInt(self.config.updateInterval) * 1000);
 	}
 });
