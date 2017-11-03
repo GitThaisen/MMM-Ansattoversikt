@@ -21,7 +21,6 @@ Module.register('MMM-Ansattoversikt', {
     
    socketNotificationReceived: function(notification, payload) {
 		if(notification === 'RANDOM_EMPLOYEE') {
-			console.log(payload);
 			if(payload != null) {
 				this.randomEmployee = payload;
 				this.updateDom(1000);
@@ -30,8 +29,8 @@ Module.register('MMM-Ansattoversikt', {
 	},
 
    getDom: function() {
-		var employeeElement = '';
-		if(this.randomEmployee) {
+		var employeeElement = document.createElement('div');
+		if(this.randomEmployee.id) {
 			employeeElement = this.createEmployeeElement();
 		}
 		return employeeElement;
