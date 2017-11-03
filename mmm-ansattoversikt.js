@@ -19,26 +19,34 @@ Module.register('MMM-Ansattoversikt', {
    },
     
    socketNotificationReceived: function(notification, payload) {
-		if(notification === 'RANDOM_EMPLOYEE'){
+		if(notification === 'RANDOM_EMPLOYEE') {
+			console.log(payload);
 			if(payload != null) {
-				this.randomUser = payload;
+				this.randomEmployee = payload;
 				this.updateDom(2.5 * 1000);
 			}
 		}
 	},
 
    getDom: function() {
-      var userElement = document.createElement('div');
-		userElement.className = 'light normal';
-		if(this.randomUser) {
+      var employeeElement = document.createElement('div');
+		employeeElement.className = 'light normal';
+		if(this.randomEmployee) {
 			var image = document.createElement('img');
 			image.className = 'profilePicture';
-         image.src = this.randomUser.some.slack.image;
-         userElement.appendChild(image);
-         var userName = document.createElement('p');
-         userName.innerHTML = this.randomUser.name + '<br/>' + this.randomUser.role;
-         userElement.appendChild(userName);
+         image.src = this.getProfilePicture();
+         employeeElement.appendChild(image);
+         var employeeName = document.createElement('p');
+         employeeName.innerHTML = this.randomEmployee.name + '<br/>' + this.randomEmployee.role;
+         employeeElement.appendChild(employeeName);
 		}
-		return userElement;
-   }
+		return employeeElement;
+	},
+
+	getProfilePicture: function(result) {
+		if(this.randomEmployee.imageSource === 'Slack') {
+			return this.randomEmployee.some.slack.image != '' ? this.randomEmployee.some.slack.image : './images/avatar_fallback.png';
+		}
+		return './images/avatar/' + this.randomEmployee.imageSource + '.png';
+	}
 });

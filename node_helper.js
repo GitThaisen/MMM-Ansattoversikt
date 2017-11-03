@@ -114,8 +114,8 @@ module.exports = NodeHelper.create({
 
 	getRandomUser: function() {
 		var self = this;
-		var randomUser = employees[Math.floor(Math.random() * employees.length)];
-		self.sendSocketNotification('RANDOM_EMPLOYEE', randomUser);
+		var randomEmployee = employees[Math.floor(Math.random() * employees.length)];
+		self.sendSocketNotification('RANDOM_EMPLOYEE', randomEmployee);
 		setTimeout(function() { self.getRandomUser(); }, self.config.updateInterval * 1000);
 	}
 });
