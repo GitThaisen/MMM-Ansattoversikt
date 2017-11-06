@@ -80,8 +80,10 @@ module.exports = NodeHelper.create({
 		var self = this;
 		if(employees.length === 0) {
 			var doc = new GoogleSpreadsheet(self.config.googleSpreadSheetId);
+			var startRow = 2; //header row
+			var endRow = 136;
 			doc.useServiceAccountAuth(creds, function (err) {
-				doc.getRows(1, { offset: 2 }, function(err, rows) {
+				doc.getRows(1, { offset: startRow, limit: endRow }, function(err, rows) {
 					var columnHeaders = rows[0];
 					var employeesFromSpreadsheet = rows.slice(1)
 						.map((valuesArray) => self.formatValues(columnHeaders, valuesArray))
